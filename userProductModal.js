@@ -1,5 +1,5 @@
 export default {
-  // 對應html的id line:212
+  // 對應html的id line:288
   template: `#userProductModal`,
   props: ["product"],
   data() {

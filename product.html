@@ -100,13 +100,22 @@
           </table>
           <!-- 購物車列表 -->
           <div class="text-end">
-            <button
-              class="btn btn-outline-danger"
-              type="button"
-              @click="deleteAllCarts"
-            >
-              清空購物車
-            </button>
+            <template v-if="cart.carts && cart.carts.length !==0 ">
+              <div>
+                <button
+                  class="btn btn-outline-danger"
+                  type="button"
+                  @click="deleteAllCarts"
+                >
+                  清空購物車
+                </button>
+              </div>
+            </template>
+            <template v-else>
+              <div>
+                <h3>目前購物車沒有品項</h3>
+              </div>
+            </template>
           </div>
           <table class="table align-middle">
             <thead>
@@ -226,7 +235,7 @@
               <v-field
                 id="tel"
                 name="電話"
-                type="text"
+                type="tel"
                 class="form-control"
                 :class="{ 'is-invalid': errors['電話'] }"
                 placeholder="請輸入電話"

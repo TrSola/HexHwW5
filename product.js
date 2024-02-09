@@ -60,6 +60,7 @@ Vue.createApp({
           this.loadingStatus.loadingItem = "";
           this.product = response.data.product;
           this.$refs.userProductModal.modalInModalComponent.show();
+          this.$refs.userProductModal.qty = 1;
         })
         .catch((err) => {
           alert(err);
@@ -77,7 +78,6 @@ Vue.createApp({
       axios
         .post(url, { data: cart })
         .then((response) => {
-          alert(response.data.message);
           this.loadingStatus.loadingItem = "";
           this.getCart();
         })
@@ -142,18 +142,22 @@ Vue.createApp({
         });
     },
     createOrder() {
-      const url = `${apiUrl}/api/${apiPath}/order`;
-      const order = this.form;
-      axios
-        .post(url, { data: order })
-        .then((response) => {
-          alert(response.data.message);
-          this.$refs.form.resetForm();
-          this.getCart();
-        })
-        .catch((err) => {
-          alert(err.response.data.message);
-        });
+      if (this.cart.carts.length === 0) {
+        alert("購物車內沒有品項");
+      } else {
+        const url = `${apiUrl}/api/${apiPath}/order`;
+        const order = this.form;
+        axios
+          .post(url, { data: order })
+          .then((response) => {
+            alert(response.data.message);
+            this.$refs.form.resetForm();
+            this.getCart();
+          })
+          .catch((err) => {
+            alert(err.response.data.message);
+          });
+      }
     },
   },
   mounted() {
